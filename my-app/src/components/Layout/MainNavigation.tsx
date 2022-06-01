@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import classes from './MainNavigation.module.css';
@@ -8,20 +8,29 @@ import AuthContext from '../../store/auth-context';
 const MainNavigation = () =>{
 
   const authCtx = useContext(AuthContext);
-  const isLogin = authCtx.isLoggedIn;
-  const nickname = authCtx.userObj.nickname;
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [nickname, setNickname] = useState('');
+  let isLogin = authCtx.isLoggedIn;
 
   
 
   useEffect(() => {
-    if (isLogin) {
+    console.log(isLogin);
+    setIsLoggedIn(isLogin);
+    if (isLoggedIn) {
       authCtx.getUser();
+      console.log(authCtx.userObj.nickname);
+      setNickname(authCtx.userObj.nickname);
     }
-  }, [isLogin]);
+  }, [isLoggedIn, authCtx, isLogin]);
+
 
   const toggleLogoutHandler = () => {
     authCtx.logout();
+    setIsLoggedIn(false);
   }
+
+  
 
   return(
     <header className={classes.header}>

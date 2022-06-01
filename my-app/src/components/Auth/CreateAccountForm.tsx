@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useState, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../store/auth-context';
@@ -16,8 +15,6 @@ const CreateAccountForm = () => {
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
-
-    const URL = 'auth/signup';
 
     const enteredEmail = emailInputRef.current!.value;
     const enteredPassword = passwordInputRef.current!.value;
