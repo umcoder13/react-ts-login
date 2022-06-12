@@ -16,6 +16,7 @@ const StaringPage = () => {
 
   // 첫 번째 렌더링을 마친 후 실행
   useEffect(() => {
+    console.log('home start!');
     if (isLogin) {
       callback(authCtx.userObj.nickname);
     } else {

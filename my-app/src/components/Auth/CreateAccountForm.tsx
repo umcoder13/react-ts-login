@@ -1,10 +1,9 @@
 import React, { useState, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../store/auth-context';
-import classes from './AuthForm.module.css';
+import classes from './CreateAccountForm.module.css';
 
 const CreateAccountForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
 
   let navigate = useNavigate();
   const authCtx = useContext(AuthContext);
@@ -13,21 +12,18 @@ const CreateAccountForm = () => {
   const nicknameInputRef = useRef<HTMLInputElement>(null);
   
 
-  const submitHandler = async (event: React.FormEvent) => {
+  const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
 
     const enteredEmail = emailInputRef.current!.value;
     const enteredPassword = passwordInputRef.current!.value;
     const enteredNickname = nicknameInputRef.current!.value;
 
-    setIsLoading(true);
-
     authCtx.signup(enteredEmail, enteredPassword, enteredNickname);
-
-    setIsLoading(false);
     
     if (authCtx.isSuccess) {
-      navigate("/");
+      return navigate("/", { replace: true });
+      
     }
     
   }

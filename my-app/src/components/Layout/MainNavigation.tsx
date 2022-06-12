@@ -8,30 +8,34 @@ import AuthContext from '../../store/auth-context';
 const MainNavigation = () =>{
 
   const authCtx = useContext(AuthContext);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [nickname, setNickname] = useState('');
   let isLogin = authCtx.isLoggedIn;
+  let isGet = authCtx.isGetSuccess;
 
-  
+  function callback(str:string) {
+    setNickname(str);
+  }
 
   useEffect(() => {
-    console.log(isLogin);
-    setIsLoggedIn(isLogin);
-    if (isLoggedIn) {
+    if (isLogin) {
+      console.log('start');
       authCtx.getUser();
-      console.log(authCtx.userObj.nickname);
-      setNickname(authCtx.userObj.nickname);
+    } 
+  }, [isLogin]);
+
+  useEffect(() => {
+    if (isGet) {
+      console.log('get start');
+      callback(authCtx.userObj.nickname);
     }
-  }, [isLoggedIn, authCtx, isLogin]);
+  }, [isGet]);
 
 
   const toggleLogoutHandler = () => {
     authCtx.logout();
-    setIsLoggedIn(false);
   }
 
   
-
   return(
     <header className={classes.header}>
       <Link to='/'><div className={classes.logo}>Home</div></Link>
@@ -39,9 +43,8 @@ const MainNavigation = () =>{
         <ul>
           <li>{!isLogin && <Link to='/login'>Login</Link>}</li>
           <li>{!isLogin && <Link to='signup'>Sign-Up</Link>}</li>
-          <li>{isLogin && <Link to='/profile'>Profile</Link>}</li>
+          <li>{isLogin && <Link to='/profile'>{nickname}</Link>}</li>
           <li>{isLogin && <button onClick={toggleLogoutHandler}>Logout</button>}</li>
-          <li>{isLogin && <p>{nickname}</p>}</li>
         </ul>
       </nav>
     </header>

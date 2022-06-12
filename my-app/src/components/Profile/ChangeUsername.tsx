@@ -17,9 +17,11 @@ const ChangeUsername = () => {
     const enteredNickname = nicknameInputRef.current!.value;
     console.log('change nickname start!');
     authCtx.changeNickname(enteredNickname);
-    alert("변경 되었습니다.");
-    authCtx.getUser();
-    navigate("/");
+    if (authCtx.isSuccess) {
+      alert("변경 되었습니다.");
+      authCtx.getUser();
+      navigate("/", { replace: true });
+    }
   }
 
   return (

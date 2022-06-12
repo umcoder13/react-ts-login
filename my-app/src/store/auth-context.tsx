@@ -16,6 +16,7 @@ const AuthContext = React.createContext({
   userObj: { email: '', nickname: '' },
   isLoggedIn: false,
   isSuccess: false,
+  isGetSuccess: false,
   signup: (email: string, password: string, nickname:string) =>  {},
   login: (email:string, password: string) => {},
   logout: () => {},
@@ -27,7 +28,7 @@ const AuthContext = React.createContext({
 
 export const AuthContextProvider:React.FC<Props> = (props) => {
 
-  const tokenData = authAction.retireveStoredToken();
+  const tokenData = authAction.retrieveStoredToken();
 
   let initialToken:any;
   if (tokenData) {
@@ -41,6 +42,7 @@ export const AuthContextProvider:React.FC<Props> = (props) => {
   });
   
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [isGetSuccess, setIsGetSuccess ] = useState<boolean>(false);
 
   const userIsLoggedIn = !!token;
 
@@ -58,6 +60,7 @@ export const AuthContextProvider:React.FC<Props> = (props) => {
 
   const loginHandler = (email:string, password: string) => {
     setIsSuccess(false);
+    console.log(isSuccess);
     
     const data = authAction.loginActionHandler(email, password);
     data.then((result) => {
@@ -69,6 +72,7 @@ export const AuthContextProvider:React.FC<Props> = (props) => {
           authAction.loginTokenHandler(loginData.accessToken, loginData.tokenExpiresIn)
         );
         setIsSuccess(true);
+        console.log(isSuccess);
       }
     })
   };
@@ -82,12 +86,14 @@ export const AuthContextProvider:React.FC<Props> = (props) => {
   }, []);
 
   const getUserHandler = () => {
+    setIsGetSuccess(false);
     const data = authAction.getUserActionHandler(token);
     data.then((result) => {
       if (result !== null) {
         console.log('get user start!');
         const userData:UserInfo = result.data;
         setUserObj(userData);
+        setIsGetSuccess(true);
       }
     })    
     
@@ -96,7 +102,7 @@ export const AuthContextProvider:React.FC<Props> = (props) => {
   const changeNicknameHandler = (nickname:string) => {
     setIsSuccess(false);
 
-    const data = authAction.changeNicknameActionHandler(userObj.email, nickname, token);
+    const data = authAction.changeNicknameActionHandler(nickname, token);
     data.then((result) => {
       if (result !== null) {
         const userData:UserInfo = result.data;
@@ -108,7 +114,7 @@ export const AuthContextProvider:React.FC<Props> = (props) => {
 
   const changePaswordHandler = (exPassword:string, newPassword: string) => {
     setIsSuccess(false);
-    const data = authAction.changePasswordActionHandler(userObj.email, exPassword, newPassword, token);
+    const data = authAction.changePasswordActionHandler(exPassword, newPassword, token);
     data.then((result) => {
       if (result !== null) {
         setIsSuccess(true);
@@ -130,6 +136,7 @@ export const AuthContextProvider:React.FC<Props> = (props) => {
     userObj,
     isLoggedIn: userIsLoggedIn,
     isSuccess,
+    isGetSuccess,
     signup: signupHandler,
     login: loginHandler,
     logout: logoutHandler,
