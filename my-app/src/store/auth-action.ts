@@ -20,15 +20,14 @@ export const loginTokenHandler = (token:string, expirationTime:number) => {
   localStorage.setItem('expirationTime', String(expirationTime));
 
   const remainingTime = calculateRemainingTime(expirationTime);
-  //console.log(remainingTime);
   return remainingTime;
 }
 
-export const retireveStoredToken = () => {
+export const retrieveStoredToken = () => {
   const storedToken = localStorage.getItem('token');
   const storedExpirationDate = localStorage.getItem('expirationTime') || '0';
 
-  const remaingTime = calculateRemainingTime(+storedExpirationDate);
+  const remaingTime = calculateRemainingTime(+ storedExpirationDate);
 
   if(remaingTime <= 1000) {
     localStorage.removeItem('token');
@@ -69,22 +68,21 @@ export const getUserActionHandler = (token:string) => {
   return response;
 }
 
-export const changeNicknameActionHandler = (email: string, nickname:string, token: string) => {
+export const changeNicknameActionHandler = ( nickname:string, token: string) => {
   const URL = '/member/nickname';
-  const changeNicknameObj = { email, nickname };
+  const changeNicknameObj = { nickname };
   const response = POST(URL, changeNicknameObj, createTokenHeader(token));
 
   return response;
 }
 
 export const changePasswordActionHandler = (
-  email: string,
   exPassword: string,
   newPassword: string,
   token: string
 ) => {
   const URL = '/member/password';
-  const changePasswordObj = { email, exPassword, newPassword }
+  const changePasswordObj = { exPassword, newPassword }
   const response = POST(URL, changePasswordObj, createTokenHeader(token));
   return response;
 }

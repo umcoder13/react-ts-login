@@ -9,7 +9,7 @@ interface FetchData {
   method: string,
   url: string,
   data? : {},
-  header? : {},
+  header : {},
 }
 
 
