@@ -60,7 +60,6 @@ export const AuthContextProvider:React.FC<Props> = (props) => {
 
   const loginHandler = (email:string, password: string) => {
     setIsSuccess(false);
-    console.log(isSuccess);
     
     const data = authAction.loginActionHandler(email, password);
     data.then((result) => {
@@ -72,7 +71,6 @@ export const AuthContextProvider:React.FC<Props> = (props) => {
           authAction.loginTokenHandler(loginData.accessToken, loginData.tokenExpiresIn)
         );
         setIsSuccess(true);
-        console.log(isSuccess);
       }
     })
   };

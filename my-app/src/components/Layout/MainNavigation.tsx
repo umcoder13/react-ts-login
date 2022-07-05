@@ -12,7 +12,7 @@ const MainNavigation = () =>{
   let isLogin = authCtx.isLoggedIn;
   let isGet = authCtx.isGetSuccess;
 
-  function callback(str:string) {
+  const callback = (str:string) => {
     setNickname(str);
   }
 

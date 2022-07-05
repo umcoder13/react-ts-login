@@ -1,4 +1,4 @@
-import { GET, POST }  from "./fetch-auth-action";
+import { GET, POST }  from "./fetch-action";
 
 const createTokenHeader = (token:string) => {
   return {

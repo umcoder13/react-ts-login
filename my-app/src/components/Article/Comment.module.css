@@ -1,0 +1,22 @@
+li {
+  list-style: none;
+}
+
+.list {
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem auto;
+  border-bottom: 1px solid gray
+}
+
+.name {
+  width: 7%
+}
+
+.body {
+  width: 70%
+}
+
+.date {
+  width: 15%
+}

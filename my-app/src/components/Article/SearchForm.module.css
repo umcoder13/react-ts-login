@@ -1,0 +1,16 @@
+.search {
+  margin: 1rem auto;
+  width: 95%;
+  max-width: 30rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+}
+
+.form button {
+  width: 5rem;
+  margin-left: 1rem;
+}

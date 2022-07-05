@@ -1,4 +1,4 @@
-import axios, { AxiosError,AxiosResponse }  from 'axios';
+import axios, { AxiosError, AxiosResponse }  from 'axios';
 
 type ServerError = { errorMessage: string };
 type LoginFailType = { status: number, error: string,};
@@ -31,7 +31,7 @@ const fetchAuth = async (fetchData: FetchData) => {
     
     if(response && response.data.error) {
       console.log((response.data as LoginFailType).error);
-      alert("Wrong ID or Password");
+      console.log(response.data);
       return null;
     }
 

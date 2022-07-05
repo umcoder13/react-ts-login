@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../store/auth-context';
 import classes from './CreateAccountForm.module.css';
@@ -10,23 +10,33 @@ const CreateAccountForm = () => {
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const nicknameInputRef = useRef<HTMLInputElement>(null);
+  const [ isSuccess, setIsSuccess ] = useState<boolean>(false); 
   
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
+    setIsSuccess(true);
+  }
 
+  const formToServer = () => {
     const enteredEmail = emailInputRef.current!.value;
     const enteredPassword = passwordInputRef.current!.value;
     const enteredNickname = nicknameInputRef.current!.value;
 
     authCtx.signup(enteredEmail, enteredPassword, enteredNickname);
-    
-    if (authCtx.isSuccess) {
-      return navigate("/", { replace: true });
-      
-    }
-    
   }
+
+  useEffect(() => {
+    if (isSuccess) {
+      formToServer();
+      if (authCtx.isSuccess) {
+        navigate("/", { replace: true });
+      }
+
+    }
+  }, [isSuccess])
+
+
 
   return (
     <section className={classes.auth}>

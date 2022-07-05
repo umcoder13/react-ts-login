@@ -1,0 +1,31 @@
+ul {
+  list-style: none;
+}
+
+.list {
+  margin: 1rem auto;
+  width: 95%;
+  max-width: 80rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.box {
+  display: flex;
+  justify-content: space-around;
+}
+
+.name {
+  width: 7%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text {
+  width: 70%;
+}
+
+.btn {
+  width:auto;
+}
