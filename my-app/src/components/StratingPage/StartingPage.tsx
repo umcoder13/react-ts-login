@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import AuthContext from '../../store/auth-context';
 import classes from './StartingPage.module.css';
 
@@ -31,6 +32,7 @@ const StaringPage = () => {
     <section className={classes.starting}>
       <h1>Hi!</h1>
       <h1>{testStr}</h1>
+      <Link to='list'>게시판페이지</Link>
     </section>
   );
 }
