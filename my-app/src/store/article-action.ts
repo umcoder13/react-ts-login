@@ -20,6 +20,12 @@ export const getArticleList = () => {
   return response;
 };
 
+export const getPageList = (param:string) => {
+  const URL = '/article/page?page' + param;
+  const response = GET(URL, {});
+  return response;
+}
+
 export const getOneArticle = (param:string, token?:string) => {
   const URL= '/article/one?id=' + param;
   if (!token) {

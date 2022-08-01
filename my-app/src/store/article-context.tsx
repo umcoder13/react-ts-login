@@ -22,7 +22,9 @@ interface Ctx {
   article?: ArticleInfo | undefined;
   page: ArticleInfo[];
   isSuccess: boolean;
+  totalPages: number;
   getPage: (token?:string) => void;
+  getPageList: (pageId: string) => void;
   getArticle: (param:string, token?:string) => void;
   createArticle: (article:PostArticle, token:string) => void;
   getUpdateArticle: (token:string, param:string) => void;
@@ -36,7 +38,9 @@ const ArticleContext = React.createContext<Ctx>({
   article: undefined,
   page: [],
   isSuccess: false,
+  totalPages: 0,
   getPage: ()=>{},
+  getPageList: () => {},
   getArticle: ()=>{},
   createArticle:  ()=>{},
   getUpdateArticle: ()=>{},
@@ -48,6 +52,7 @@ export const ArticleContextProvider:React.FC<Props> = (props) => {
 
   const [article, setArticle] = useState<ArticleInfo>();
   const [page, setPage] = useState<ArticleInfo[]>([]);
+  const [totalPages, setTotalPages] = useState<number>(0);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
 
@@ -63,6 +68,15 @@ export const ArticleContextProvider:React.FC<Props> = (props) => {
       }
     })
     setIsSuccess(true);
+  }
+
+  const getPageHandlerV2 = async (pageId: string) => {
+    setIsSuccess(false);
+    const data = await articleAction.getPageList(pageId);
+    const page:ArticleInfo[] = data?.data.content; 
+    const pages:number = data?.data.totalPages;
+    setPage(page);
+    setTotalPages(pages);
   }
 
   const getArticleHandler = (param:string, token?:string) => {
@@ -129,7 +143,9 @@ export const ArticleContextProvider:React.FC<Props> = (props) => {
     article,
     page,
     isSuccess,
+    totalPages,
     getPage: getPageHandler,
+    getPageList: getPageHandlerV2,
     getArticle: getArticleHandler,
     createArticle: createArticleHandler,
     getUpdateArticle: getUpdateArticleHancler,

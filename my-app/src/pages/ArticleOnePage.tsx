@@ -5,7 +5,7 @@ import Comment from "../components/Article/CommentList";
 import Recommend from "../components/Article/Recommend";
 import { ArticleContextProvider } from "../store/article-context";
 import { CommentContextProvider } from "../store/comment-context";
-import RecommendContext, { RecommendContextProvider } from "../store/recommend-context";
+import { RecommendContextProvider } from "../store/recommend-context";
 
 const ArticleOnePage = () => {
   let { articleId } = useParams();

@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import classes from './ArticleList.module.css';
 import ArticleContext, { ArticleContextProvider } from '../../store/article-context';
+import Paging from './Paging';
 
 type ArticleInfo = {
   articleId: number,
@@ -81,6 +82,7 @@ const ArticleList = () => {
         </Link>
       }
       </div>
+      
     </div>
   );
 }
