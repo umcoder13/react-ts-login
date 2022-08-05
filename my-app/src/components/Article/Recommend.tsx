@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import EmptyHeart from '../../images/empty-heart.png';
 import Heart from '../../images/heart.png';

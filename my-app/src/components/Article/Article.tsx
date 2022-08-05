@@ -20,7 +20,7 @@ const Article:React.FC<Props> = (props) => {
 
   const backHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    navigate("../list");
+    navigate("/page/1");
   }
   
   const updateHandler = (event: React.MouseEvent<HTMLButtonElement>) => {

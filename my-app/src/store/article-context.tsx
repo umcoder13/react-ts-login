@@ -77,6 +77,7 @@ export const ArticleContextProvider:React.FC<Props> = (props) => {
     const pages:number = data?.data.totalPages;
     setPage(page);
     setTotalPages(pages);
+    setIsSuccess(true);
   }
 
   const getArticleHandler = (param:string, token?:string) => {

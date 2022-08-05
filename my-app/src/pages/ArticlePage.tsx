@@ -5,11 +5,7 @@ import { ArticleContextProvider } from "../store/article-context";
 const ArticlePage = () => {
   let { pageId } = useParams();
 
-  return (
-    <ArticleContextProvider>
-      <ArticleList />
-    </ArticleContextProvider>
-  );
+  return;
 }
 
 export default ArticlePage;

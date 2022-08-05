@@ -21,7 +21,7 @@ export const getArticleList = () => {
 };
 
 export const getPageList = (param:string) => {
-  const URL = '/article/page?page' + param;
+  const URL = '/article/page?page=' + param;
   const response = GET(URL, {});
   return response;
 }
