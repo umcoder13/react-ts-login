@@ -15,7 +15,14 @@ const CreateAccountForm = () => {
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    setIsSuccess(true);
+    const enteredEmail = emailInputRef.current!.value;
+    const enteredPassword = passwordInputRef.current!.value;
+    const enteredNickname = nicknameInputRef.current!.value;
+    authCtx.signup(enteredEmail, enteredPassword, enteredNickname)
+    if (authCtx.isSuccess) {
+      navigate("/",  { replace: true })
+    }
+    //setIsSuccess(true);
   }
 
   const formToServer = () => {

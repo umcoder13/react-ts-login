@@ -6,6 +6,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import classes from './ArticleList.module.css';
 import ArticleContext, { ArticleContextProvider } from '../../store/article-context';
+import Paging from './Paging';
+
+type Props = { item:string | undefined}
 
 type ArticleInfo = {
   articleId: number,
@@ -18,9 +21,10 @@ type ArticleInfo = {
 };
 
 
-const ArticleList = () => {
+const ArticleList:React.FC<Props> = (props) => {
 
   let navigate = useNavigate();
+  const pageId = String(props.item);
 
   const columns = [{
     dataField: 'articleId',
@@ -53,11 +57,12 @@ const ArticleList = () => {
   const articleCtx = useContext(ArticleContext);
   
   const [AList, setAList] = useState<ArticleInfo[]>([]);
+  const [maxNum, setMaxNum] = useState<number>(1);
 
   let isLogin = authCtx.isLoggedIn;
 
   const fetchListHandler = useCallback(() => {
-    articleCtx.getPage();
+    articleCtx.getPageList(pageId);
   }, []);
 
 
@@ -69,6 +74,8 @@ const ArticleList = () => {
   useEffect(() => {
     if (articleCtx.isSuccess) {
       setAList(articleCtx.page);
+      console.log(AList);
+      setMaxNum(articleCtx.totalPages);
     }
   }, [articleCtx])
 
@@ -81,6 +88,7 @@ const ArticleList = () => {
         </Link>
       }
       </div>
+      <Paging currentPage={Number(pageId)} maxPage={maxNum}/>
     </div>
   );
 }

@@ -22,7 +22,10 @@ interface Ctx {
   article?: ArticleInfo | undefined;
   page: ArticleInfo[];
   isSuccess: boolean;
+  isGetUpdateSuccess: boolean;
+  totalPages: number;
   getPage: (token?:string) => void;
+  getPageList: (pageId: string) => void;
   getArticle: (param:string, token?:string) => void;
   createArticle: (article:PostArticle, token:string) => void;
   getUpdateArticle: (token:string, param:string) => void;
@@ -36,7 +39,10 @@ const ArticleContext = React.createContext<Ctx>({
   article: undefined,
   page: [],
   isSuccess: false,
+  isGetUpdateSuccess: false,
+  totalPages: 0,
   getPage: ()=>{},
+  getPageList: () => {},
   getArticle: ()=>{},
   createArticle:  ()=>{},
   getUpdateArticle: ()=>{},
@@ -48,7 +54,9 @@ export const ArticleContextProvider:React.FC<Props> = (props) => {
 
   const [article, setArticle] = useState<ArticleInfo>();
   const [page, setPage] = useState<ArticleInfo[]>([]);
+  const [totalPages, setTotalPages] = useState<number>(0);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [isGetUpdateSuccess, setIsGetUpdateSuccess] = useState<boolean>(false);
 
 
   const getPageHandler = () => {
@@ -62,6 +70,16 @@ export const ArticleContextProvider:React.FC<Props> = (props) => {
         console.log(isSuccess);
       }
     })
+    setIsSuccess(true);
+  }
+
+  const getPageHandlerV2 = async (pageId: string) => {
+    setIsSuccess(false);
+    const data = await articleAction.getPageList(pageId);
+    const page:ArticleInfo[] = data?.data.content; 
+    const pages:number = data?.data.totalPages;
+    setPage(page);
+    setTotalPages(pages);
     setIsSuccess(true);
   }
 
@@ -94,11 +112,11 @@ export const ArticleContextProvider:React.FC<Props> = (props) => {
   }
 
   const getUpdateArticleHancler = useCallback(async (token:string, param:string) => {
-    setIsSuccess(false);
+    setIsGetUpdateSuccess(false);
     const updateData = await articleAction.getChangeArticle(token, param);
     const article:ArticleInfo = updateData?.data;
     setArticle(article);
-    setIsSuccess(true);
+    setIsGetUpdateSuccess(true);
   }, [])
 
   const updateArticleHandler = (token:string, article:PostArticle) => {
@@ -129,7 +147,10 @@ export const ArticleContextProvider:React.FC<Props> = (props) => {
     article,
     page,
     isSuccess,
+    isGetUpdateSuccess,
+    totalPages,
     getPage: getPageHandler,
+    getPageList: getPageHandlerV2,
     getArticle: getArticleHandler,
     createArticle: createArticleHandler,
     getUpdateArticle: getUpdateArticleHancler,

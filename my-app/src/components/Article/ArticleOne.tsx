@@ -34,7 +34,7 @@ const ArticleOne:React.FC<Props> = (props) => {
   const deleteHandler = (id:string) => {
     articleCtx.deleteArticle(authCtx.token, id);
     alert("삭제되었습니다.");
-    navigate("/list")
+    navigate("/page/1")
   }
 
   const getContext = useCallback(() => {

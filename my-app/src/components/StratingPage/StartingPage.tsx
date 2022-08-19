@@ -32,7 +32,7 @@ const StaringPage = () => {
     <section className={classes.starting}>
       <h1>Hi!</h1>
       <h1>{testStr}</h1>
-      <Link to='list'>게시판페이지</Link>
+      <Link to='/page/1'>게시판페이지</Link>
     </section>
   );
 }
