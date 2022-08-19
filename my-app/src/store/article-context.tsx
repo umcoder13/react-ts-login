@@ -22,6 +22,7 @@ interface Ctx {
   article?: ArticleInfo | undefined;
   page: ArticleInfo[];
   isSuccess: boolean;
+  isGetUpdateSuccess: boolean;
   totalPages: number;
   getPage: (token?:string) => void;
   getPageList: (pageId: string) => void;
@@ -38,6 +39,7 @@ const ArticleContext = React.createContext<Ctx>({
   article: undefined,
   page: [],
   isSuccess: false,
+  isGetUpdateSuccess: false,
   totalPages: 0,
   getPage: ()=>{},
   getPageList: () => {},
@@ -54,6 +56,7 @@ export const ArticleContextProvider:React.FC<Props> = (props) => {
   const [page, setPage] = useState<ArticleInfo[]>([]);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [isGetUpdateSuccess, setIsGetUpdateSuccess] = useState<boolean>(false);
 
 
   const getPageHandler = () => {
@@ -109,11 +112,11 @@ export const ArticleContextProvider:React.FC<Props> = (props) => {
   }
 
   const getUpdateArticleHancler = useCallback(async (token:string, param:string) => {
-    setIsSuccess(false);
+    setIsGetUpdateSuccess(false);
     const updateData = await articleAction.getChangeArticle(token, param);
     const article:ArticleInfo = updateData?.data;
     setArticle(article);
-    setIsSuccess(true);
+    setIsGetUpdateSuccess(true);
   }, [])
 
   const updateArticleHandler = (token:string, article:PostArticle) => {
@@ -144,6 +147,7 @@ export const ArticleContextProvider:React.FC<Props> = (props) => {
     article,
     page,
     isSuccess,
+    isGetUpdateSuccess,
     totalPages,
     getPage: getPageHandler,
     getPageList: getPageHandlerV2,

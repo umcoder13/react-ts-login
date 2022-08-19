@@ -45,30 +45,29 @@ const CreateArticleForm:React.FC<Props> = (props) => {
 
     props.item 
     ? articleCtx.updateArticle(authCtx.token, postArticle) : articleCtx.createArticle(postArticle, authCtx.token);
-
-    if (articleCtx.isSuccess) {
-      console.log("success");
-      console.log(articleCtx.isSuccess)
-      navigate("/list", { replace: true })
-    }
   }
 
-  
-
   const setUpdateArticleHandler = useCallback(() => {
-    if (articleCtx.isSuccess) {
+    if (articleCtx.isGetUpdateSuccess) {
       setUpdateArticle({
         title: articleCtx.article!.articleTitle,
         body: articleCtx.article!.articleBody
       })
     }
-  }, [articleCtx.isSuccess])
+  }, [articleCtx.isGetUpdateSuccess])
 
   useEffect(() => {
     if (props.item) {
       articleCtx.getUpdateArticle(authCtx.token, props.item);
     }
   }, [props.item])
+
+  useEffect(() => {
+    if (articleCtx.isSuccess) {
+      console.log("wrting success");
+      navigate("/page/1", { replace: true })
+    }
+  }, [articleCtx.isSuccess])
 
   useEffect(() => {
     console.log('update effect')
