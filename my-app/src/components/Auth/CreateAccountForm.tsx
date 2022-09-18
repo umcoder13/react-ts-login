@@ -10,7 +10,7 @@ const CreateAccountForm = () => {
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const nicknameInputRef = useRef<HTMLInputElement>(null);
-  const [ isSuccess, setIsSuccess ] = useState<boolean>(false); 
+  const [isSuccess, setIsSuccess] = useState<boolean>(false); 
   
 
   const submitHandler = (event: React.FormEvent) => {

@@ -59,6 +59,7 @@ export const AuthContextProvider:React.FC<Props> = (props) => {
     setIsSuccess(true);
   }
 
+  /*
   const loginHandler = (email:string, password: string) => {
     setIsSuccess(false);
     
@@ -74,6 +75,21 @@ export const AuthContextProvider:React.FC<Props> = (props) => {
         setIsSuccess(true);
       }
     })
+  };
+  */
+
+  const loginHandler = async (email:string, password: string) => {
+    setIsSuccess(false);
+    const getData = await authAction.loginActionHandler(email, password);
+    const loginData:LoginToken = getData?.data;
+    if (loginData) {
+      setToken(loginData.accessToken);
+      logoutTimer = setTimeout(
+        logoutHandler,
+        authAction.loginTokenHandler(loginData.accessToken, loginData.tokenExpiresIn)
+      );
+    }
+    setIsSuccess(true);
   };
 
   const logoutHandler = useCallback(() => {

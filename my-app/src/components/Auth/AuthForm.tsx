@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../store/auth-context';
 import classes from './AuthForm.module.css';
@@ -10,9 +10,11 @@ const AuthForm = () => {
 
   let navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [formSuccess, setIsFormSuccess] = useState(false);
   const authCtx = useContext(AuthContext);
 
-  const submitHandler = async (event: React.FormEvent) => {
+  const submitHandler = (event: React.FormEvent) => {
+    setIsFormSuccess(false);
     event.preventDefault();
     
     const enteredEmail = emailInputRef.current!.value;
@@ -22,11 +24,26 @@ const AuthForm = () => {
     authCtx.login(enteredEmail, enteredPassword);
     setIsLoading(false);
 
+    /*
     if (authCtx.isSuccess) {
-      navigate("/", { replace: true });
+      
+    } 
+    */
+    setIsFormSuccess(true);
+  }
+
+  useEffect(() => {
+    if (formSuccess) {
+      if (authCtx.isSuccess) {
+        if (authCtx.token) {
+          navigate("/", { replace: true });
+        } else {
+          alert("로그인 실패");
+        }
+      }
+      
     }
-    
-}
+  }, [formSuccess, authCtx])
 
     return (
       <section className={classes.auth}>

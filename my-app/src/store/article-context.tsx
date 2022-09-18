@@ -1,22 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import * as articleAction from './article-action';
 
-type Props = { children?: React.ReactNode }
-type ArticleInfo = {
-  articleId: number,
-  memberNickname: string,
-  articleTitle: string,
-  articleBody: string,
-  cratedAt: string,
-  updatedAt?: string,
-  isWritten?: boolean
-};
-
-interface PostArticle {
-  id? : string,
-  title: string,
-  body: string
-} 
+import { ChildProps, ArticleInfo, PostArticle } from '../utility/types';
 
 interface Ctx {
   article?: ArticleInfo | undefined;
@@ -24,7 +9,6 @@ interface Ctx {
   isSuccess: boolean;
   isGetUpdateSuccess: boolean;
   totalPages: number;
-  getPage: (token?:string) => void;
   getPageList: (pageId: string) => void;
   getArticle: (param:string, token?:string) => void;
   createArticle: (article:PostArticle, token:string) => void;
@@ -34,14 +18,12 @@ interface Ctx {
 }
 
 
-
 const ArticleContext = React.createContext<Ctx>({
   article: undefined,
   page: [],
   isSuccess: false,
   isGetUpdateSuccess: false,
   totalPages: 0,
-  getPage: ()=>{},
   getPageList: () => {},
   getArticle: ()=>{},
   createArticle:  ()=>{},
@@ -50,7 +32,7 @@ const ArticleContext = React.createContext<Ctx>({
   deleteArticle: ()=>{}
 });
 
-export const ArticleContextProvider:React.FC<Props> = (props) => {
+export const ArticleContextProvider:React.FC<ChildProps> = (props) => {
 
   const [article, setArticle] = useState<ArticleInfo>();
   const [page, setPage] = useState<ArticleInfo[]>([]);
@@ -59,21 +41,7 @@ export const ArticleContextProvider:React.FC<Props> = (props) => {
   const [isGetUpdateSuccess, setIsGetUpdateSuccess] = useState<boolean>(false);
 
 
-  const getPageHandler = () => {
-    setIsSuccess(false);
-    const data =  articleAction.getArticleList();
-    data.then((result) => {
-      if (result !== null) {
-        const page:ArticleInfo[] = result.data;
-        setPage(page);
-        
-        console.log(isSuccess);
-      }
-    })
-    setIsSuccess(true);
-  }
-
-  const getPageHandlerV2 = async (pageId: string) => {
+  const getPageHandler = async (pageId: string) => {
     setIsSuccess(false);
     const data = await articleAction.getPageList(pageId);
     const page:ArticleInfo[] = data?.data.content; 
@@ -92,8 +60,6 @@ export const ArticleContextProvider:React.FC<Props> = (props) => {
       if (result !== null) {
         const article:ArticleInfo = result.data;
         setArticle(article);
-        
-        
       }
     })
     setIsSuccess(true);
@@ -105,19 +71,19 @@ export const ArticleContextProvider:React.FC<Props> = (props) => {
     data.then((result) => {
       if (result !== null) {
         console.log(isSuccess);
-        
       }
     })
     setIsSuccess(true);
   }
 
-  const getUpdateArticleHancler = useCallback(async (token:string, param:string) => {
+  // useCallback 없애봄
+  const getUpdateArticleHancler = async (token:string, param:string) => {
     setIsGetUpdateSuccess(false);
     const updateData = await articleAction.getChangeArticle(token, param);
     const article:ArticleInfo = updateData?.data;
     setArticle(article);
     setIsGetUpdateSuccess(true);
-  }, [])
+  }
 
   const updateArticleHandler = (token:string, article:PostArticle) => {
     setIsSuccess(false);
@@ -140,7 +106,6 @@ export const ArticleContextProvider:React.FC<Props> = (props) => {
       }
     })
     setIsSuccess(true);
-
   }
 
   const contextValue:Ctx = {
@@ -149,8 +114,7 @@ export const ArticleContextProvider:React.FC<Props> = (props) => {
     isSuccess,
     isGetUpdateSuccess,
     totalPages,
-    getPage: getPageHandler,
-    getPageList: getPageHandlerV2,
+    getPageList: getPageHandler,
     getArticle: getArticleHandler,
     createArticle: createArticleHandler,
     getUpdateArticle: getUpdateArticleHancler,

@@ -4,14 +4,12 @@ import EmptyHeart from '../../images/empty-heart.png';
 import Heart from '../../images/heart.png';
 import AuthContext from '../../store/auth-context';
 import RecommendContext from '../../store/recommend-context';
+import { Recommends } from "../../utility/types";
+
 import classes from './Recommend.module.css';
 
 type Props = { item:string | undefined }
 
-type Recommends = {
-  recommendNum: number
-  recommended: boolean
-}
 
 const Recommend:React.FC<Props> = (props) => {
   
@@ -60,7 +58,6 @@ const Recommend:React.FC<Props> = (props) => {
     } else {
       (recommends!.recommended ? recommendCtx.deleteRecommend(id, authCtx.token) : recommendCtx.postRecommend(id, authCtx.token));
     }
-
   }
 
   const heartImage = (heart:string) => {

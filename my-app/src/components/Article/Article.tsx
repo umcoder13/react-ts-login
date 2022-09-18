@@ -1,16 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import { ArticleInfo } from "../../utility/types";
 
 type Props = { item:ArticleInfo, onDelete: (id:string) => void }
-
-type ArticleInfo = {
-  articleId: number,
-  memberNickname: string,
-  articleTitle: string,
-  articleBody?: string,
-  cratedAt: string,
-  updatedAt?: string,
-  written?: boolean
-};
 
 const Article:React.FC<Props> = (props) => {
 
@@ -48,7 +39,7 @@ const Article:React.FC<Props> = (props) => {
           <div>{props.item!.articleBody}</div>
         </div>
         <button onClick={backHandler}>뒤로</button>
-        {props.item!.written && 
+        {props.item!.isWritten && 
           <div>
             <button onClick={updateHandler}>수정</button><br />
             <button onClick={deleteHandler}>삭제</button>
