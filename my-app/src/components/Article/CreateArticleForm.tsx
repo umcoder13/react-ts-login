@@ -3,21 +3,13 @@ import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import ArticleContext from "../../store/article-context";
 import AuthContext from "../../store/auth-context";
+import { PostArticle } from "../../utility/types"
 
 type Props = { item:string | undefined }
-
-interface PostArticle {
-  id?: string
-  title: string,
-  body: string
-} 
-
 
 const CreateArticleForm:React.FC<Props> = (props) => {
 
   let navigate = useNavigate();
-
-  
 
   const [updateArticle, setUpdateArticle] = useState<PostArticle>({
     title: '',
@@ -63,19 +55,16 @@ const CreateArticleForm:React.FC<Props> = (props) => {
   }, [props.item])
 
   useEffect(() => {
+    console.log('update effect')
+    setUpdateArticleHandler();
+  }, [setUpdateArticleHandler])
+
+  useEffect(() => {
     if (articleCtx.isSuccess) {
       console.log("wrting success");
       navigate("/page/1", { replace: true })
     }
   }, [articleCtx.isSuccess])
-
-  useEffect(() => {
-    console.log('update effect')
-    setUpdateArticleHandler();
-  }, [setUpdateArticleHandler])
-
-
-
 
   return (
     <div>

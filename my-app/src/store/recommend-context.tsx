@@ -1,14 +1,7 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState } from "react";
 
 import * as recommendAction from './recommend-action';
-
-type Props = { children?: React.ReactNode }
-
-type Recommends = {
-  recommendNum: number
-  recommended: boolean
-}
-
+import { ChildProps, Recommends } from '../utility/types';
 
 interface RecommendCtx {
   recommends: Recommends | undefined;
@@ -28,7 +21,7 @@ const RecommendContext = React.createContext<RecommendCtx>({
   deleteRecommend: () => {},
 });
 
-export const RecommendContextProvider:React.FC<Props> = (props) => {
+export const RecommendContextProvider:React.FC<ChildProps> = (props) => {
 
   const [recommends, setRecommends] = useState<Recommends>();
   const [isSuccess, setIsSuccess] = useState<boolean>(false);

@@ -1,22 +1,7 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState } from "react";
 
 import * as commentAction from './comment-action';
-
-type Props = { children?: React.ReactNode }
-type CommentInfo = {
-  commentId: number,
-  memberNickname: string,
-  commentBody: string,
-  createdAt: Date,
-  written: boolean
-}
-
-type PostComment = {
-  articleId: string,
-  body: string
-}
-
-
+import { ChildProps, CommentInfo, PostComment } from '../utility/types';
 
 interface CommentCtx {
   commentList: CommentInfo[];
@@ -34,7 +19,7 @@ const CommentContext = React.createContext<CommentCtx>({
   deleteComment: () => {},
 });
 
-export const CommentContextProvider:React.FC<Props> = (props) => {
+export const CommentContextProvider:React.FC<ChildProps> = (props) => {
 
   const [commentList, setCommentList] = useState<CommentInfo[]>([]);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);

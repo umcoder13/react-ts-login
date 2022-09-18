@@ -5,20 +5,11 @@ import AuthContext from '../../store/auth-context';
 import { Link, useNavigate } from 'react-router-dom';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import classes from './ArticleList.module.css';
-import ArticleContext, { ArticleContextProvider } from '../../store/article-context';
+import ArticleContext from '../../store/article-context';
 import Paging from './Paging';
+import { ArticleInfo } from "../../utility/types";
 
 type Props = { item:string | undefined}
-
-type ArticleInfo = {
-  articleId: number,
-  memberNickname: string,
-  articleTitle: string,
-  articleBody?: string,
-  cratedAt: string,
-  updatedAt?: string,
-  isWritten?: boolean
-};
 
 
 const ArticleList:React.FC<Props> = (props) => {

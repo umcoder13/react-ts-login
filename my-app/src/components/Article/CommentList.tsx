@@ -4,27 +4,18 @@ import CommentContext from '../../store/comment-context';
 import Comment from './Comment';
 import classes from './CommentList.module.css';
 
+import { CommentInfo, PostComment } from "../../utility/types";
+
 type Props = { item:string | undefined }
 
-type CommentInfo = {
-  commentId: number,
-  memberNickname: string,
-  commentBody: string,
-  createdAt: Date,
-  written: boolean
+interface CommentInfoProps extends CommentInfo {
   onDelete?: (id:string) => void;
 }
-
-type PostComment = {
-  articleId: string,
-  body: string
-}
-
 
 
 const CommentList:React.FC<Props> = (props) => {
 
-  const [comments, setComments] = useState<CommentInfo[]>();
+  const [comments, setComments] = useState<CommentInfoProps[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const commentRef = useRef<HTMLTextAreaElement>(null);
@@ -74,8 +65,6 @@ const CommentList:React.FC<Props> = (props) => {
 
   if (isLoading && comments) {
     if (comments!.length > 0) {
-      console.log("if start")
-      console.log(comments);
       media = (<ul>
         {
         comments.map((comment) => {
@@ -94,8 +83,6 @@ const CommentList:React.FC<Props> = (props) => {
     } else {
       media = <div></div>
     }
-    
-      
   }
   
 
@@ -118,6 +105,3 @@ const CommentList:React.FC<Props> = (props) => {
 }
 
 export default CommentList;
-
-/*
-*/

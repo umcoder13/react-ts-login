@@ -1,17 +1,14 @@
 import React, { useRef } from "react";
 import classes from "./Comment.module.css";
 
-type Props = {
-  commentId: number,
-  memberNickname: string,
-  commentBody: string,
-  createdAt: string,
-  written: boolean,
+import { CommentInfo } from "../../utility/types";
+
+
+interface CommentInfoProps extends CommentInfo {
   onDelete: (id:string) => void;
 }
 
-const Comment:React.FC<Props> = (props) => {
-
+const Comment:React.FC<CommentInfoProps> = (props) => {
 
   const deleteIdRef = useRef<HTMLInputElement>(null);
 

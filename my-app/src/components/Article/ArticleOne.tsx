@@ -4,19 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import ArticleContext from '../../store/article-context';
 import AuthContext from '../../store/auth-context';
 import Article from './Article';
+import { ArticleInfo } from "../../utility/types";
 import classses from './ArticleOne.module.css';
 
 type Props = { item:string | undefined }
-
-type ArticleInfo = {
-  articleId: number,
-  memberNickname: string,
-  articleTitle: string,
-  articleBody?: string,
-  cratedAt: string,
-  updatedAt?: string,
-  written?: boolean
-};
 
 const ArticleOne:React.FC<Props> = (props) => {
 
